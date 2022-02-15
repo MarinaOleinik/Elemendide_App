@@ -1,0 +1,86 @@
+﻿ Grid pageGrid = new Grid
+            {
+                RowDefinitions =
+            {
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
+            },
+                ColumnDefinitions =
+            {
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
+            }
+            };
+            var columnIndex = 0;
+            for (var rowIndex = 0; rowIndex <= 8; rowIndex++)
+            {
+                var boxview = new BoxView { BackgroundColor = Color.White };
+                var swipeGestureRecognizer = new PanGestureRecognizer();
+
+                swipeGestureRecognizer.PanUpdated += (sender, args) =>
+                {
+                    var boxView = (BoxView)sender;
+                    var panBaseBounds = boxView.Bounds;
+                    var eventX = panBaseBounds.X + args.TotalX;
+                    var eventY = panBaseBounds.Y + args.TotalY;
+                    foreach (var gridChild in pageGrid.Children)
+                    {
+                        var testBounds = gridChild.Bounds;
+                        if (testBounds.X <= eventX && eventX <= testBounds.X + testBounds.Width &&
+                            testBounds.Y <= eventY && eventY <= testBounds.Y + testBounds.Height)
+                        {
+                            gridChild.BackgroundColor = Color.Gray;
+                            break;
+                        }
+                    }
+                };
+
+                boxview.GestureRecognizers.Add(swipeGestureRecognizer);
+
+                if (rowIndex == 4 && columnIndex == 3)
+                {
+                    boxview.BackgroundColor = Color.Red;
+                }
+
+                pageGrid.Children.Add(boxview, columnIndex, rowIndex);
+
+                if (rowIndex != 8) continue;
+                if (columnIndex == 6) return;
+                columnIndex += 1;
+                rowIndex = -1;
+            }
+            Content = pageGrid;
+
+
+gr = new Grid
+            {
+                RowDefinitions =
+                    {
+                        new RowDefinition{Height=new GridLength(2,GridUnitType.Star)},
+                        new RowDefinition{Height=new GridLength(1,GridUnitType.Star)},
+                        new RowDefinition{Height=new GridLength(1,GridUnitType.Star)}
+                    },
+                ColumnDefinitions =
+                    {
+                        new ColumnDefinition{Width=new GridLength(1,GridUnitType.Star)},
+                        new ColumnDefinition{Width=new GridLength(1,GridUnitType.Star)}
+                    },
+            };
+            gr.Children.Add(new BoxView { Color = Color.Blue }, 0, 0);
+            gr.Children.Add(new BoxView { Color = Color.Green }, 1, 0);
+            gr.Children.Add(new BoxView { Color = Color.Red }, 0, 1);
+            gr.Children.Add(new BoxView { Color = Color.YellowGreen }, 1,1);
+            gr.Children.Add(new BoxView { Color = Color.Purple}, 0, 2);
+            gr.Children.Add(new BoxView { Color = Color.Pink }, 1, 2);
