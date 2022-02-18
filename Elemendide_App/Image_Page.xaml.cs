@@ -17,6 +17,11 @@ namespace Elemendide_App
         public Image_Page()
         {
             img = new Image { Source = "test.jpg" };
+            TapGestureRecognizer tap = new TapGestureRecognizer();
+            
+            tap.Tapped += Tap_Tapped;
+            tap.NumberOfTapsRequired = 2;
+            img.GestureRecognizers.Add(tap);
             sw = new Switch
             {
                 IsToggled = true,
@@ -26,6 +31,18 @@ namespace Elemendide_App
             sw.Toggled += Sw_Toggled;
             this.Content = new StackLayout { Children = { img, sw } };
         }
+        int tapid;
+        private void Tap_Tapped(object sender, EventArgs e)
+        {
+            tapid++;
+            var imagesender = (Image)sender;
+            if (tapid % 2==0)
+            {
+                img.Source = "bob.jpg";
+            }
+            else { img.Source = "test.jpg"; }
+        }
+
         private void Sw_Toggled(object sender, ToggledEventArgs e)
         {
             if (e.Value)

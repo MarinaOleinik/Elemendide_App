@@ -25,6 +25,7 @@ namespace Elemendide_App
             };
             sld = new Slider
             {
+                
                 Minimum=0,
                 Maximum=100,
                 Value=30,
@@ -34,6 +35,7 @@ namespace Elemendide_App
                 
             };
             sld.ValueChanged += Sld_ValueChanged;
+            
             stp = new Stepper
             {
                 Minimum = 0,

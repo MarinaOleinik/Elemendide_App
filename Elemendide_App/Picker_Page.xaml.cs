@@ -15,6 +15,7 @@ namespace Elemendide_App
         Picker picker;
         WebView webView;
         StackLayout st;
+        string[] lehed = new string[4] { "https://tahvel.edu.ee", "https://moodle.edu.ee", "https://www.tthk.ee/", "https://www.google.com/" };
         public Picker_Page()
         {
             picker = new Picker
@@ -25,10 +26,19 @@ namespace Elemendide_App
             picker.Items.Add("Moodle");
             picker.Items.Add("TTHK");
             picker.SelectedIndexChanged += Picker_SelectedIndexChanged;
+            webView = new WebView
+            {  };
+            SwipeGestureRecognizer swipe = new SwipeGestureRecognizer();
+            swipe.Swiped += Swipe_Swiped;
+            swipe.Direction = SwipeDirection.Right;
+            webView.GestureRecognizers.Add(swipe);
             st = new StackLayout { Children = { picker } };
             Content = st;
         }
-        string[] lehed = new string[3] { "https://tahvel.edu.ee", "https://moodle.edu.ee", "https://www.tthk.ee/" };
+        private void Swipe_Swiped(object sender, SwipedEventArgs e)
+        {
+            webView.Source = new UrlWebViewSource { Url = lehed[4] };
+        }
         private void Picker_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (webView!=null)
@@ -37,11 +47,11 @@ namespace Elemendide_App
             }
             webView = new WebView
             {
-                Source = new UrlWebViewSource { Url =lehed[picker.SelectedIndex] },
-                VerticalOptions = LayoutOptions.FillAndExpand
+                Source = new UrlWebViewSource { Url = lehed[picker.SelectedIndex] },
+                VerticalOptions = LayoutOptions.FillAndExpand,
             };
-            
             st.Children.Add(webView);
         }
+
     }
 }
