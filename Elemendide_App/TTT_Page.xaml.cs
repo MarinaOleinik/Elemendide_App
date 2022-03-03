@@ -16,8 +16,8 @@ namespace Elemendide_App
         BoxView b;
         Button uus_mang;
         public bool esimene;
-        List<string> tulemused_1;
-        List<string> tulemused_2;
+        int tulemus = -1;
+        int[,] Tulemused = new int[3, 3];
         public TTT_Page()
         {
             grid2X1 = new Grid
@@ -69,6 +69,8 @@ namespace Elemendide_App
             if (uus)
             {
                 Kes_on_esimene();
+                int[,] Tulemused = new int[3, 3];
+                tulemus = -1;
                 grid3X3 = new Grid
                 {
                     BackgroundColor = Color.Red,
@@ -97,20 +99,18 @@ namespace Elemendide_App
                         tap.Tapped += Tap_Tapped;
                         b.GestureRecognizers.Add(tap);
                     }
-
                 }
                 grid2X1.Children.Add(grid3X3, 0, 0);
             }
             
-        }
-        int tulemus=2;
+        }       
         // "00""10""20", 
         // "01""11""21", 
         // "02""12""22",
         // "00""01""02",
         // "10""11""12",
         // "20""21""22", "001122", "021120" };
-        int[,] Tulemused = new int[3, 3];
+        
         public int Kontroll()
         {
             if (Tulemused[0,0]==1 && Tulemused[1,0]==1 && Tulemused[2,0]==1 || Tulemused[0, 1] == 1 && Tulemused[1, 1] == 1 && Tulemused[2, 1] == 1 || Tulemused[0, 2] == 1 && Tulemused[1, 2] == 1 && Tulemused[2, 2] == 1)
@@ -133,12 +133,10 @@ namespace Elemendide_App
             if (tulemus==1)
             {
                 DisplayAlert("Võit", "Esimine on võitja!","Ok");
-                tulemus = 2;
             }
             else if (tulemus==0)
             {
                 DisplayAlert("Võit", "Teine on võitja!", "Ok");
-                tulemus = 2;
             }
         }
         private void Tap_Tapped(object sender, EventArgs e)
