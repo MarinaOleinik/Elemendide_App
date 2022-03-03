@@ -14,6 +14,8 @@ namespace Elemendide_App
     {
         Grid grid2X1, grid3X3;
         BoxView b;
+        Button uus_mang;
+        public bool esimene;
         public TTT_Page()
         {
             grid2X1 = new Grid
@@ -32,40 +34,72 @@ namespace Elemendide_App
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
                 },
             };
-            grid3X3 = new Grid
+
+            Uus_mang();
+            uus_mang = new Button()
             {
-                BackgroundColor = Color.Red,
-                RowDefinitions =
+                Text = "Uus mäng"
+            };
+            grid2X1.Children.Add(uus_mang, 0, 1);
+            uus_mang.Clicked += Uus_mang_Clicked;
+            Content = grid2X1;
+        }
+        public async void Kes_on_esimene()
+        {
+            string esimene_valik = await DisplayPromptAsync("Kes on esimene?", "Tee valiku Kollane-1 või Punane-2", initialValue: "1", maxLength: 1, keyboard: Keyboard.Numeric);
+            if (esimene_valik=="1")
+            {
+                esimene = true;
+            }
+            else
+            {
+                esimene = false;
+            }
+        }
+        private void Uus_mang_Clicked(object sender, EventArgs e)
+        { 
+            Uus_mang();
+        }
+
+        public async void Uus_mang()
+        {
+            bool uus =await DisplayAlert("Uus mäng", "Kas tõesti tahad uus mäng?", "Tahan küll!", "Ei taha!");
+            if (uus)
+            {
+                Kes_on_esimene();
+                grid3X3 = new Grid
+                {
+                    BackgroundColor = Color.Red,
+                    RowDefinitions =
                 {
 
                     new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
                     new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
                     new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
                 },
-                ColumnDefinitions =
+                    ColumnDefinitions =
                 {
                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
 
                 }
-            };
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
+                };
+                for (int i = 0; i < 3; i++)
                 {
-                    b = new BoxView { BackgroundColor=Color.Green};
-                    grid3X3.Children.Add(b,j, i);
-                    TapGestureRecognizer tap = new TapGestureRecognizer();
-                    tap.Tapped += Tap_Tapped;
-                    b.GestureRecognizers.Add(tap);
-                }
+                    for (int j = 0; j < 3; j++)
+                    {
+                        b = new BoxView { BackgroundColor = Color.Green };
+                        grid3X3.Children.Add(b, j, i);
+                        TapGestureRecognizer tap = new TapGestureRecognizer();
+                        tap.Tapped += Tap_Tapped;
+                        b.GestureRecognizers.Add(tap);
+                    }
 
+                }
+                grid2X1.Children.Add(grid3X3, 0, 0);
             }
             
-            grid2X1.Children.Add(grid3X3,0,0);
-
-            Content = grid2X1;
         }
 
         private void Tap_Tapped(object sender, EventArgs e)
@@ -73,8 +107,18 @@ namespace Elemendide_App
             var b = (BoxView)sender;
             var r = Grid.GetRow(b);
             var c = Grid.GetColumn(b);
-            b = new BoxView { BackgroundColor = Color.Yellow };
+            if (esimene==true)
+            {
+                b = new BoxView { BackgroundColor = Color.Yellow };
+                esimene = false;
+            }
+            else
+            {
+                b = new BoxView { BackgroundColor = Color.Red };
+                esimene = true;
+            }
             grid3X3.Children.Add(b,c,r);
+
         }
     }
 }
