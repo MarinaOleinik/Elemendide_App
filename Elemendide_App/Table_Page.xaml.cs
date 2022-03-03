@@ -38,31 +38,24 @@ namespace Elemendide_App
                     {
                         new EntryCell
                         {
-                            Label="Nimi:",
-                            Placeholder="Sisesta oma sõbra nimi",
-                            Keyboard=Keyboard.Default
+                            Label="Nimi:", Placeholder="Sisesta oma sõbra nimi", Keyboard=Keyboard.Default
                         }
                     },
                     new TableSection("Kontaktandmed:")
                     {
                         new EntryCell
                         {
-                            Label="Telefon",
-                            Placeholder="Sisesta tel. number",
-                            Keyboard=Keyboard.Telephone
+                            Label="Telefon", Placeholder="Sisesta tel. number", Keyboard=Keyboard.Telephone
                         },
                         new EntryCell
                         {
-                            Label="Email",
-                            Placeholder="Sisesta email",
-                            Keyboard=Keyboard.Email
+                            Label="Email", Placeholder="Sisesta email", Keyboard=Keyboard.Email
                         },
                         sc
                     }, 
                     fotosection
                 }
-            };
-            
+            };           
             Content = tabelview;
         }
 

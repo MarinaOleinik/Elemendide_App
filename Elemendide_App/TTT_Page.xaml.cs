@@ -16,6 +16,8 @@ namespace Elemendide_App
         BoxView b;
         Button uus_mang;
         public bool esimene;
+        List<string> tulemused_1;
+        List<string> tulemused_2;
         public TTT_Page()
         {
             grid2X1 = new Grid
@@ -60,7 +62,7 @@ namespace Elemendide_App
         { 
             Uus_mang();
         }
-
+        
         public async void Uus_mang()
         {
             bool uus =await DisplayAlert("Uus mäng", "Kas tõesti tahad uus mäng?", "Tahan küll!", "Ei taha!");
@@ -101,7 +103,44 @@ namespace Elemendide_App
             }
             
         }
-
+        int tulemus=2;
+        // "00""10""20", 
+        // "01""11""21", 
+        // "02""12""22",
+        // "00""01""02",
+        // "10""11""12",
+        // "20""21""22", "001122", "021120" };
+        int[,] Tulemused = new int[3, 3];
+        public int Kontroll()
+        {
+            if (Tulemused[0,0]==1 && Tulemused[1,0]==1 && Tulemused[2,0]==1 || Tulemused[0, 1] == 1 && Tulemused[1, 1] == 1 && Tulemused[2, 1] == 1 || Tulemused[0, 2] == 1 && Tulemused[1, 2] == 1 && Tulemused[2, 2] == 1)
+            {
+                tulemus = 1;
+            }
+            else if (Tulemused[0, 0] == 1 && Tulemused[0, 1] == 1 && Tulemused[0,2] == 1 || Tulemused[1, 0] == 1 && Tulemused[1, 1] == 1 && Tulemused[1, 2] == 1 || Tulemused[2, 0] == 1 && Tulemused[2, 1] == 1 && Tulemused[2, 2] == 1)
+            {
+                tulemus = 1;
+            }
+            else if (Tulemused[0, 0] == 1 && Tulemused[1, 1] == 1 && Tulemused[2, 2] == 1 || Tulemused[0, 2] == 1 && Tulemused[1, 1] == 1 && Tulemused[2, 0] == 1)
+            {
+                tulemus = 1;
+            }
+            return tulemus;
+        }
+        public void Lopp()
+        {
+            tulemus = Kontroll();
+            if (tulemus==1)
+            {
+                DisplayAlert("Võit", "Esimine on võitja!","Ok");
+                tulemus = 2;
+            }
+            else if (tulemus==0)
+            {
+                DisplayAlert("Võit", "Teine on võitja!", "Ok");
+                tulemus = 2;
+            }
+        }
         private void Tap_Tapped(object sender, EventArgs e)
         {
             var b = (BoxView)sender;
@@ -111,13 +150,16 @@ namespace Elemendide_App
             {
                 b = new BoxView { BackgroundColor = Color.Yellow };
                 esimene = false;
+                Tulemused[r, c] = 1;
             }
             else
             {
                 b = new BoxView { BackgroundColor = Color.Red };
                 esimene = true;
+                Tulemused[r, c] = 0;
             }
             grid3X3.Children.Add(b,c,r);
+            Lopp();
 
         }
     }
