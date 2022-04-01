@@ -125,6 +125,10 @@ namespace Elemendide_App
             {
                 tulemus = 1;
             }
+            else
+            {
+                tulemus = 0;
+            }
             return tulemus;
         }
         public void Lopp()
@@ -134,9 +138,13 @@ namespace Elemendide_App
             {
                 DisplayAlert("Võit", "Esimine on võitja!","Ok");
             }
-            else if (tulemus==0)
+            else if (tulemus==2)
             {
                 DisplayAlert("Võit", "Teine on võitja!", "Ok");
+            }
+            else
+            {
+                DisplayAlert("Viik", "Viik!", "Ok");
             }
         }
         private void Tap_Tapped(object sender, EventArgs e)
@@ -154,7 +162,7 @@ namespace Elemendide_App
             {
                 b = new BoxView { BackgroundColor = Color.Red };
                 esimene = true;
-                Tulemused[r, c] = 0;
+                Tulemused[r, c] = 2;
             }
             grid3X3.Children.Add(b,c,r);
             Lopp();

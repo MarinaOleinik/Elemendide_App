@@ -41,7 +41,6 @@ namespace Elemendide_App
             }
             catch (Exception)
             {
-
                 throw;
             }
             rnd = new Random();

@@ -49,30 +49,25 @@ namespace Elemendide_App
         }
         private async void ShowTime()
         {
-            //time = (int)(tp.Time.TotalSeconds - DateTime.Now.TimeOfDay.TotalSeconds);
-
-            try
+            
+            var time = (int)(tp.Time.TotalSeconds - DateTime.Now.TimeOfDay.TotalSeconds);
+            while (time != 0)
             {
-                if (tp.Time.ToString() != DateTime.Now.ToString())
-                {
-                    await Task.Delay(1000);
-                    lbl.Text =(tp.Time.TotalSeconds - DateTime.Now.TimeOfDay.TotalSeconds).ToString();
-                }
-                else
+                await Task.Delay(1000);
+                lbl.Text = time.ToString();
+                time = (int)(tp.Time.TotalSeconds - DateTime.Now.TimeOfDay.TotalSeconds);
+                if (time == 0)
                 {
                     lbl.BackgroundColor = Color.Red;
                 }
             }
-            catch (Exception)
-            {
-                throw;
-            } 
-            
+
         }
         
         private void Tp_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             lbl.Text = "Oli valitud aeg: " + tp.Time;
+            ShowTime();
         }
         private void Dp_DateSelected(object sender, DateChangedEventArgs e)
         {

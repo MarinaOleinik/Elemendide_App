@@ -20,7 +20,6 @@ namespace Elemendide_App
         {
             sc = new SwitchCell { Text = "Näita veel" };
             sc.OnChanged += Sc_OnChanged;
-
             ic = new ImageCell
             {
                 ImageSource = ImageSource.FromFile("bob.jpg"),
@@ -38,18 +37,24 @@ namespace Elemendide_App
                     {
                         new EntryCell
                         {
-                            Label="Nimi:", Placeholder="Sisesta oma sõbra nimi", Keyboard=Keyboard.Default
+                            Label="Nimi:", 
+                            Placeholder="Sisesta oma sõbra nimi", 
+                            Keyboard=Keyboard.Default
                         }
                     },
                     new TableSection("Kontaktandmed:")
                     {
                         new EntryCell
                         {
-                            Label="Telefon", Placeholder="Sisesta tel. number", Keyboard=Keyboard.Telephone
+                            Label="Telefon", 
+                            Placeholder="Sisesta tel. number", 
+                            Keyboard=Keyboard.Telephone
                         },
                         new EntryCell
                         {
-                            Label="Email", Placeholder="Sisesta email", Keyboard=Keyboard.Email
+                            Label="Email", 
+                            Placeholder="Sisesta email", 
+                            Keyboard=Keyboard.Email
                         },
                         sc
                     }, 

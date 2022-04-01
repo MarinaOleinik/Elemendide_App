@@ -10,7 +10,7 @@ namespace Elemendide_App
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new TTT_Page());
+            MainPage = new NavigationPage(new Picker_Page());
         }
 
         protected override void OnStart()
